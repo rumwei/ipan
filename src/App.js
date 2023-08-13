@@ -4,10 +4,6 @@ import { Input, Layout, Row, Col, Typography, List, message } from "antd";
 
 //需要管理的命令
 const wholeShell = [
-    'aabbcc1122333',
-    '7788344bsjnkvkf',
-    'hello world',
-    'helloworld'
 ];
 const { Title } = Typography;
 function App() {
