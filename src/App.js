@@ -21,8 +21,8 @@ class ShellTags {
 }
 
 //需要管理的命令
+//new ShellTags("ssh tencent-kafka", ["richLog", "kafka", "ansible"]),
 const wholeShellTags = [
-  new ShellTags("ssh tencent-kafka", ["richLog", "kafka", "ansible"]),
 ];
 
 function getTagsByCommand(command) {
