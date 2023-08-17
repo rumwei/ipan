@@ -1,5 +1,5 @@
 import { CopyTwoTone, SearchOutlined, SmileTwoTone } from "@ant-design/icons";
-import { useMemo, useState, useRef, useEffect } from "react";
+import { useMemo, useState, useRef, useEffect, Fragment } from "react";
 import { groupBy } from "lodash-es";
 import {
   Input,
@@ -11,6 +11,7 @@ import {
   Tag,
   Card,
   Space,
+  Divider,
 } from "antd";
 
 class ShellTags {
@@ -18,6 +19,10 @@ class ShellTags {
     this.text = text;
     this.tags = tags;
   }
+}
+
+function getRandomColor() {
+  return "hsl(" + Math.random() * 360 + ", 80%, 60%)"
 }
 
 //需要管理的命令
@@ -30,28 +35,6 @@ function getTagsByCommand(command) {
     ?.tags;
 }
 
-const colors = [
-  "#f50",
-  "#2db7f5",
-  "#87d068",
-  "#108ee9",
-  "blue",
-  "geekblue",
-  "purple",
-  "processing",
-  "success",
-  "error",
-  "warning",
-  "magenta",
-  "red",
-  "volcano",
-  "orange",
-  "gold",
-  "lime",
-  "green",
-  "cyan",
-];
-
 const tags = new Set();
 wholeShellTags.forEach((shellTags) => {
   if (shellTags.tags.length > 0) {
@@ -60,9 +43,9 @@ wholeShellTags.forEach((shellTags) => {
 });
 const sortedAllTags = Array.from(tags).sort();
 const tag2Color = new Map();
-sortedAllTags.forEach((tag, index) => {
-  // NOTE: 不要随机颜色，会导致不同的标签颜色一样
-  tag2Color.set(tag, colors[index]);
+sortedAllTags.forEach((tag, idx) => {
+  // tag2Color.set(tag, colors[idx]);
+  tag2Color.set(tag, getRandomColor());
 });
 
 const tagsGroup = Object.values(groupBy(sortedAllTags, (tag) => tag[0]));
@@ -276,14 +259,19 @@ function App() {
         </Row>
       </Col>
       <Col>
-        <Card title="Tag" style={{ width: 350, marginTop: '78px' }}>
+        <Card title="Tag" style={{ width: "350px", marginTop: "78px" }}>
           <Space direction="vertical">
             {tagsGroup.map((tags) => {
               return (
-                <div key={tags[0][0]}>
-                  <Space>
+                <Fragment key={tags[0][0]}>
+                  <div>
                     {tags.map((tag) => (
-                      <Tag style={{cursor: 'pointer'}}
+                      <Tag
+                        style={{
+                          cursor: "pointer",
+                          marginBottom: "2px",
+                          marginTop: "2px",
+                        }}
                         onClick={() => onTagClick(tag)}
                         key={tag}
                         color={tag2Color.get(tag)}
@@ -291,8 +279,9 @@ function App() {
                         {tag}
                       </Tag>
                     ))}
-                  </Space>
-                </div>
+                  </div>
+                  <Divider style={{ margin: "0" }} />
+                </Fragment>
               );
             })}
           </Space>
@@ -303,5 +292,3 @@ function App() {
 }
 
 export default App;
-
-
