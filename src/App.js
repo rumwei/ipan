@@ -226,7 +226,10 @@ function App() {
                         description={
                           <Row justify="space-between">
                             <Col>
-                              <span
+                              <span style={{cursor: "pointer"}} onClick={() => {
+                                  navigator.clipboard.writeText(shells[index]);
+                                  message.success({ content: "Copied!" });
+                                }}
                                 dangerouslySetInnerHTML={{
                                   __html: shell,
                                 }}
@@ -242,7 +245,9 @@ function App() {
                               {getTagsByCommand(shells[index])
                                 ?.sort()
                                 .map((tag) => (
-                                  <Tag key={tag} color={tag2Color.get(tag)}>
+                                  <Tag style={{
+                                    fontWeight: "bold"
+                                  }} key={tag} color={tag2Color.get(tag)}>
                                     {tag}
                                   </Tag>
                                 ))}
@@ -271,6 +276,7 @@ function App() {
                           cursor: "pointer",
                           marginBottom: "2px",
                           marginTop: "2px",
+                          fontWeight: "bold"
                         }}
                         onClick={() => onTagClick(tag)}
                         key={tag}
